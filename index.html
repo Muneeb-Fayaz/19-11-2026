@@ -3,37 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FocusFlow | Study Timer</title>
+  <title>CineScope | Movie Finder</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="page">
-    <nav class="topbar"><a class="brand" href="#">focus<span>flow</span></a><span class="tag">A little focus goes a long way</span></nav>
-    <section class="hero">
-      <p class="eyebrow">YOUR SPACE TO GET THINGS DONE</p>
-      <h1>Make time for<br><span>what matters.</span></h1>
-      <p class="intro">One task. One session. No distractions. Start small and build momentum.</p>
+  <header class="header">
+    <a class="logo" href="#">CINE<span>SCOPE</span></a>
+    <p>Find your next favourite.</p>
+  </header>
+  <main>
+    <section class="welcome">
+      <p class="kicker">YOUR PERSONAL MOVIE SHELF</p>
+      <h1>Stories worth<br><span>staying in for.</span></h1>
+      <p class="sub">Browse a hand-picked collection, search by title, and filter by genre.</p>
+      <div class="search-wrap"><input id="searchInput" type="search" placeholder="Search movies..."><span>⌕</span></div>
     </section>
-    <section class="timer-card">
-      <div class="modes">
-        <button class="mode active" data-minutes="25">Focus</button>
-        <button class="mode" data-minutes="5">Short break</button>
-        <button class="mode" data-minutes="15">Long break</button>
+    <section class="library">
+      <div class="library-head"><div><p class="kicker">THE COLLECTION</p><h2>Explore movies</h2></div><span id="resultCount">6 titles</span></div>
+      <div class="filters" id="filters">
+        <button class="filter active" data-genre="All">All</button>
+        <button class="filter" data-genre="Drama">Drama</button>
+        <button class="filter" data-genre="Sci-Fi">Sci-Fi</button>
+        <button class="filter" data-genre="Thriller">Thriller</button>
+        <button class="filter" data-genre="Adventure">Adventure</button>
       </div>
-      <div class="clock" id="clock">25:00</div>
-      <p id="status">Ready when you are.</p>
-      <div class="timer-actions">
-        <button id="startBtn" class="primary">Start focus</button>
-        <button id="resetBtn" class="secondary">Reset</button>
-      </div>
+      <div class="movie-grid" id="movieGrid"></div>
+      <p class="empty" id="emptyMessage" hidden>No movies found. Try another title or genre.</p>
     </section>
-    <section class="task-card">
-      <div><p class="eyebrow">TODAY'S INTENTION</p><h2>What are you working on?</h2></div>
-      <div class="task-entry"><input id="taskInput" type="text" placeholder="e.g. Revise Python functions"><button id="saveTask">Save task</button></div>
-      <p id="taskOutput" class="task-output">Your task will appear here.</p>
-    </section>
-    <footer>Built for calmer, more focused days · FocusFlow</footer>
   </main>
+  <footer>Movie details in this demo are sample content · CineScope</footer>
   <script src="script.js"></script>
 </body>
 </html>

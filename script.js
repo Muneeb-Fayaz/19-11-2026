@@ -1,75 +1,48 @@
-const clock = document.getElementById("clock");
-const statusText = document.getElementById("status");
-const startBtn = document.getElementById("startBtn");
-const resetBtn = document.getElementById("resetBtn");
-const modeButtons = document.querySelectorAll(".mode");
+const movies = [
+  {title:"Interstellar",year:2014,genre:"Sci-Fi",rating:"8.7",icon:"✦",description:"A team travels beyond our galaxy in search of a future for humanity."},
+  {title:"The Pursuit of Happyness",year:2006,genre:"Drama",rating:"8.0",icon:"☀",description:"A father refuses to give up while building a better life for his son."},
+  {title:"Shutter Island",year:2010,genre:"Thriller",rating:"8.2",icon:"◈",description:"An investigation on a remote island becomes a mind-bending mystery."},
+  {title:"The Martian",year:2015,genre:"Sci-Fi",rating:"8.0",icon:"◎",description:"An astronaut uses science and stubborn optimism to survive on Mars."},
+  {title:"Into the Wild",year:2007,genre:"Adventure",rating:"8.0",icon:"⌁",description:"A young traveller leaves comfort behind to discover the open world."},
+  {title:"The Green Mile",year:1999,genre:"Drama",rating:"8.6",icon:"❖",description:"A prison guard encounters a prisoner with an extraordinary gift."}
+];
 
-let selectedMinutes = 25;
-let secondsLeft = selectedMinutes * 60;
-let timer = null;
-let running = false;
+let activeGenre = "All";
+const grid = document.getElementById("movieGrid");
+const searchInput = document.getElementById("searchInput");
 
-function showTime() {
-  const minutes = Math.floor(secondsLeft / 60);
-  const seconds = secondsLeft % 60;
-  clock.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+function renderMovies() {
+  const search = searchInput.value.toLowerCase().trim();
+  const visibleMovies = movies.filter(movie => {
+    const matchesGenre = activeGenre === "All" || movie.genre === activeGenre;
+    const matchesSearch = movie.title.toLowerCase().includes(search);
+    return matchesGenre && matchesSearch;
+  });
+
+  grid.innerHTML = visibleMovies.map(movie => `
+    <article class="movie-card">
+      <div class="poster" aria-hidden="true">${movie.icon}</div>
+      <div class="movie-info">
+        <h3>${movie.title}</h3>
+        <div class="meta"><span>${movie.year}</span><span class="genre">${movie.genre}</span><span>★ ${movie.rating}</span></div>
+        <p>${movie.description}</p>
+      </div>
+    </article>
+  `).join("");
+
+  document.getElementById("resultCount").textContent =
+    `${visibleMovies.length} ${visibleMovies.length === 1 ? "title" : "titles"}`;
+  document.getElementById("emptyMessage").hidden = visibleMovies.length !== 0;
 }
 
-function pauseTimer() {
-  clearInterval(timer);
-  timer = null;
-  running = false;
-  startBtn.textContent = "Continue";
-}
-
-function startTimer() {
-  if (running) {
-    pauseTimer();
-    statusText.textContent = "Paused. Take your time.";
-    return;
-  }
-
-  running = true;
-  startBtn.textContent = "Pause";
-  statusText.textContent = "You're doing great. Stay with it.";
-
-  timer = setInterval(() => {
-    secondsLeft--;
-    showTime();
-
-    if (secondsLeft <= 0) {
-      pauseTimer();
-      secondsLeft = 0;
-      showTime();
-      startBtn.textContent = "Start again";
-      statusText.textContent = "Session complete. Nice work!";
-    }
-  }, 1000);
-}
-
-function resetTimer() {
-  pauseTimer();
-  secondsLeft = selectedMinutes * 60;
-  showTime();
-  startBtn.textContent = "Start focus";
-  statusText.textContent = "Ready when you are.";
-}
-
-modeButtons.forEach(button => {
+document.querySelectorAll(".filter").forEach(button => {
   button.addEventListener("click", () => {
-    modeButtons.forEach(item => item.classList.remove("active"));
+    document.querySelectorAll(".filter").forEach(item => item.classList.remove("active"));
     button.classList.add("active");
-    selectedMinutes = Number(button.dataset.minutes);
-    resetTimer();
+    activeGenre = button.dataset.genre;
+    renderMovies();
   });
 });
 
-startBtn.addEventListener("click", startTimer);
-resetBtn.addEventListener("click", resetTimer);
-
-document.getElementById("saveTask").addEventListener("click", () => {
-  const task = document.getElementById("taskInput").value.trim();
-  const output = document.getElementById("taskOutput");
-  output.textContent = task ? `Today's focus: ${task}` : "Add a task first, then save it.";
-});
-showTime();
+searchInput.addEventListener("input", renderMovies);
+renderMovies();

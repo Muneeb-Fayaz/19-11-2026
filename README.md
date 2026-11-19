@@ -1,20 +1,21 @@
-# FocusFlow — Study Timer
+# CineScope — Movie Finder
 
-A clean Pomodoro-style focus timer made with plain HTML, CSS and JavaScript.
+A dark, editorial-style movie discovery page built with HTML, CSS and vanilla JavaScript.
 
 ## Features
-- Focus, short-break and long-break sessions
-- Start, pause, continue and reset controls
-- Simple daily task note
-- Responsive layout for mobile and desktop
-- No frameworks, packages or API keys
+- Search movie titles as you type
+- Filter the collection by genre
+- Responsive movie-card grid
+- Sample ratings, years and descriptions
+- Empty state when there are no matches
+- No frameworks or external dependencies
 
 ## Run it
-Open `index.html` in your browser. That's all — no installation needed.
+Open `index.html` in any modern browser.
 
 ## Files
 - `index.html` — page structure
-- `style.css` — layout and styling
-- `script.js` — timer and task interactions
+- `style.css` — dark theme and responsive cards
+- `script.js` — sample collection, search and genre filters
 
-Made as a beginner-friendly frontend practice project.
+The movie collection is included in the JavaScript file, so the project works offline.
